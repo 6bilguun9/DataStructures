@@ -89,6 +89,6 @@ public class DynamicArray<T> {
         names.append("the");
         names.append("bilguun");
         names.append(".com");
-        names.print(); // Bilguun the Great
+        names.print(); 
     }
 }
