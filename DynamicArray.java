@@ -50,6 +50,15 @@ public class DynamicArray<T> {
         }
         size--;
     }
+    public void pop() {
+        if (size <= 0) {
+            System.out.println("Empty");
+        }
+        else {
+            size--;
+        }
+
+    }
     public T get(int index){
         checkIndex(index);
         return array[index];
