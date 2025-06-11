@@ -50,14 +50,13 @@ public class DynamicArray<T> {
         }
         size--;
     }
-    public void pop() {
-        if (size <= 0) {
-            System.out.println("Empty");
+    public T pop() {
+        if (size == 0) {
+            return null;
         }
-        else {
-            size--;
-        }
-
+        T value = array[size - 1];
+        size--;
+        return value;
     }
     public T get(int index){
         checkIndex(index);
@@ -101,3 +100,6 @@ public class DynamicArray<T> {
         names.print(); 
     }
 }
+//polish the dynamic array 
+//Add a toString(), implement Iterable<T> (hasNext()/next()), utility =  (clear(), indexOf(), trimToSize()).
+//make it java convention
