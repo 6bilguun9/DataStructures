@@ -260,7 +260,7 @@ public class SinglyLinkedList<T> implements Iterable<T>{
         list.removeLast();   
         System.out.println("After removes: " + list);   // 5
 
-        Object[] arr = list.toArray();                  // <-- USE Object[] HERE
+        Object[] arr = list.toArray();                  
         System.out.println("toArray(): " 
         + java.util.Arrays.toString(arr));  
     }
