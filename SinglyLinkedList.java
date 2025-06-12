@@ -92,9 +92,124 @@ public class SinglyLinkedList<T> implements Iterable<T>{
         if(isEmpty()){
             return null;
         }
-        return null;
-
+        if (head == tail) {
+            T data = head.data;
+            head = tail = null;
+            size--;                          // update size
+            return data;
+        }
+        Node<T> current = head;
+        while(current.next != tail){
+            current = current.next;
+        }
+        T temp = tail.data;
+        current.next = null;
+        tail = current;
+        size--;
+        return temp;
     }
+    public T getFirst(){
+        return head.data;
+    }
+    public T getLast(){
+        return tail.data;
+    }
+    public T get(int index){
+        if (index < 0 || index >= size){
+            throw new IndexOutOfBoundsException("Index " + index + " out of bounds");
+        }
+        Node<T> current = head;
+        for(int i = 0; i < index; i++){
+            current = current.next;
+        }
+        return current.data;
+    }
+    public void add(int index, T data){
+        if(index < 0 || index > size){
+            throw new IndexOutOfBoundsException("Index " + index + " out of bounds");
+        }
 
+        Node<T> newNode = new Node<>(data);
+
+        if(index == 0){
+            newNode.next = head;
+            head = newNode;
+            if(size == 0) tail = newNode;
+            size++;
+            return;
+        }
+        Node<T> current = head;
+
+        for(int i = 0; i < index-1; i++){
+            current = current.next;
+        }
+        newNode.next = current.next;
+        current.next = newNode;
+
+        if (newNode.next == null) tail = newNode;
+        size++;
+    }
+    public T remove(int index){
+        if (index < 0 || index >= size){
+            throw new IndexOutOfBoundsException("Index " + index + " out of bounds");
+        }
+
+        T temp;
+        if(index == 0){
+            temp = head.data;
+            head = head.next;
+            if(head == null) tail = null;
+            size--;
+            return temp;
+        }
+        else {
+            Node<T> current = head;
+            for(int i = 0; i < index-1; i++){
+                current = current.next;
+            }
+            temp = current.next.data;
+            current.next = current.next.next;
+
+            if(current.next == null){
+                tail = current;
+            }
+        }
+
+        size--;
+        return temp;
+    }
+    public boolean contains(Object o){
+        Node<T> current = head;
+
+        if (o == null) {
+            while (current != null) {
+                if (current.data == null) {
+                    return true;
+                }
+                current = current.next;
+            }
+        } else {
+            while (current != null) {
+                if (o.equals(current.data)) {
+                    return true;
+                }
+                current = current.next;
+            }
+        }
+        return false;
+    }
+    public int indexOf(Object o){
+        Node<T> current = head;
+        int index = 0;
+
+        while (current != null) {
+            if ((o == null && current.data == null) || (o != null && o.equals(current.data))) {
+                    return index;          
+            }
+            current = current.next;    
+            index++;
+        }
+        return -1;  
+    }
 
 }

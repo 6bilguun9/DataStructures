@@ -8,12 +8,6 @@ public class DynamicArray<T> {
         size = 0;
         array = (T[]) new Object [capacity];
     }
-
-    private void checkIndex(int index){
-        if (index < 0 || index >= size){
-            throw new IndexOutOfBoundsException("index out of bounds");
-        }
-    }
     public void resize(){
         if (capacity == size){
             capacity *= 2;
@@ -33,8 +27,8 @@ public class DynamicArray<T> {
         insert(value, 0);
     }
     public void insert(T value, int index){
-        if (index < 0 || index > size) {
-            throw new IndexOutOfBoundsException("Index out of bounds");
+        if (index < 0 || index > size){
+            throw new IndexOutOfBoundsException("index out of bounds");
         }
         resize();
         for (int i = size; i > index; i--){
@@ -44,7 +38,9 @@ public class DynamicArray<T> {
         size++;
     }
     public void remove(int index){
-        checkIndex(index);
+        if(index < 0 || index >= size){
+            throw new IndexOutOfBoundsException("index out of bounds");
+        }
         for (int i = index; i < size-1; i++){
             array[i] = array[i+1];
         }
@@ -59,11 +55,15 @@ public class DynamicArray<T> {
         return value;
     }
     public T get(int index){
-        checkIndex(index);
+        if (index < 0 || index > size){
+            throw new IndexOutOfBoundsException("index out of bounds");
+        }
         return array[index];
     }
     public void set(T value, int index){
-        checkIndex(index);
+        if (index < 0 || index > size){
+            throw new IndexOutOfBoundsException("index out of bounds");
+        }
         array[index] = value;
     }
     public int size(){return size;}
