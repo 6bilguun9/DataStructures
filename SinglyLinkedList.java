@@ -45,6 +45,7 @@ public class SinglyLinkedList<T> implements Iterable<T>{
             throw new UnsupportedOperationException();
         }
     }
+    @Override
     public Iterator<T> iterator() {
         return new ListIterator();
     }
@@ -184,38 +185,27 @@ public class SinglyLinkedList<T> implements Iterable<T>{
         size--;
         return temp;
     }
-    public boolean contains(Object o){
+    public boolean contains(T data){
         Node<T> current = head;
-
-        if (o == null) {
-            while (current != null) {
-                if (current.data == null) {
-                    return true;
-                }
-                current = current.next;
+        while(current != null){
+            if(data == null && current.data == null || (data != null && data.equals(current.data))){
+                return true;
             }
-        } else {
-            while (current != null) {
-                if (o.equals(current.data)) {
-                    return true;
-                }
-                current = current.next;
-            }
+            current = current.next;
         }
         return false;
     }
-    public int indexOf(Object o){
+    public int indexOf(T data){
         Node<T> current = head;
         int index = 0;
-
-        while (current != null) {
-            if ((o == null && current.data == null) || (o != null && o.equals(current.data))) {
-                    return index;          
+        while(current != null){
+            if ((data == null && current.data == null) ||(data != null && data.equals(current.data))) {
+                return index;
             }
-            current = current.next;    
             index++;
+            current = current.next;
         }
-        return -1;  
+        return -1; 
     }
     public void clear(){
         head = null;
@@ -248,20 +238,45 @@ public class SinglyLinkedList<T> implements Iterable<T>{
     }
     public static void main(String[] args) {
         SinglyLinkedList<Integer> list = new SinglyLinkedList<>();
-        list.addFirst(1);
-        list.addLast(2);
-        list.add(1, 5);                                 // [1, 5, 2]
-        System.out.println("List: " + list);            // 1->5->2
 
-        System.out.println("First: " + list.getFirst());  
-        System.out.println("Last:  " + list.getLast());   
+        System.out.println("Empty? " + list.isEmpty() + ", size=" + list.size());
+        // → Empty? true, size=0
 
-        list.removeFirst();  
-        list.removeLast();   
-        System.out.println("After removes: " + list);   // 5
+        list.addFirst(10);             // [10]
+        list.addLast(30);              // [10->30]
+        list.add(1, 20);               // [10->20->30]
+        list.add(3, 40);               // [10->20->30->40]
+        System.out.println("After adds: " + list + ", size=" + list.size());
+        // → After adds: 10->20->30->40, size=4
 
-        Object[] arr = list.toArray();                  
-        System.out.println("toArray(): " 
-        + java.util.Arrays.toString(arr));  
+        System.out.println("getFirst(): " + list.getFirst());  // → 10
+        System.out.println("getLast():  " + list.getLast());   // → 40
+        System.out.println("get(2):     " + list.get(2));      // → 30
+
+        System.out.println("contains(20): " + list.contains(20));  // → true
+        System.out.println("indexOf(30):  " + list.indexOf(30));   // → 2
+        System.out.println("contains(99): " + list.contains(99));  // → false
+
+        System.out.println("removeFirst(): " + list.removeFirst()); // → 10, now [20->30->40]
+        System.out.println("removeLast():  " + list.removeLast());  // → 40, now [20->30]
+        list.addLast(50);
+        list.addLast(60);  
+        System.out.println("Before remove(1): " + list);            // → [20->30->50->60]
+        System.out.println("remove(1):      " + list.remove(1));   // → 30, now [20->50->60]
+        System.out.println("After remove:   " + list);
+        // → [20->50->60]
+
+        System.out.print("Iteration: ");
+        for (Integer x : list) {
+            System.out.print(x + " ");
+        }
+        System.out.println();  // → 20 50 60
+
+
+        Object[] arr = list.toArray();
+        System.out.println("toArray(): " + java.util.Arrays.toString(arr));//[20, 50, 60]
+
+        list.clear();
+        System.out.println("After clear: " + list + ", isEmpty=" + list.isEmpty() + ", size=" + list.size()); //isEmpty=true, size=0
     }
 }
