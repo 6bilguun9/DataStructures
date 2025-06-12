@@ -1,6 +1,7 @@
 //Hi I am trying to use java convention on this
 
 import java.util.Iterator;
+import java.util.NoSuchElementException;
 
 class Node<T> {
     public Node<T> next;
@@ -33,7 +34,7 @@ public class SinglyLinkedList<T> implements Iterable<T>{
         @Override
         public T next(){
             if(current == null){
-                return null;
+                throw new NoSuchElementException("There is no next");
             }
             T data = current.data;
             current = current.next;
@@ -71,7 +72,6 @@ public class SinglyLinkedList<T> implements Iterable<T>{
             tail = newNode;
         }
         else {
-            newNode.next = null;
             tail.next = newNode;
             tail = newNode;
         }
@@ -109,9 +109,15 @@ public class SinglyLinkedList<T> implements Iterable<T>{
         return temp;
     }
     public T getFirst(){
+        if(head == null){
+            throw new NoSuchElementException("empty");
+        }
         return head.data;
     }
     public T getLast(){
+        if(tail == null){
+            throw new NoSuchElementException("empty");
+        }
         return tail.data;
     }
     public T get(int index){
@@ -211,5 +217,51 @@ public class SinglyLinkedList<T> implements Iterable<T>{
         }
         return -1;  
     }
+    public void clear(){
+        head = null;
+        tail = null;
+        size = 0;
+    }
+    @Override
+    public String toString(){
+        StringBuilder sb = new StringBuilder();
+        Node<T> current = head;
+        while(current != null){
+            sb.append(current.data);
+            if(current.next != null){
+                sb.append("->");
+            }
+            current = current.next;
+        }
+        return sb.toString();
+    }
+    @SuppressWarnings("unchecked")
+    public T[] toArray(){
+        Node<T> current = head;
+        T[] array = (T[]) new Object [size];
+        for(int i = 0; i < size; i++){
+            array[i] = current.data;
+            current = current.next;
+        }
+        return array;
+        
+    }
+    public static void main(String[] args) {
+        SinglyLinkedList<Integer> list = new SinglyLinkedList<>();
+        list.addFirst(1);
+        list.addLast(2);
+        list.add(1, 5);                                 // [1, 5, 2]
+        System.out.println("List: " + list);            // 1->5->2
 
+        System.out.println("First: " + list.getFirst());  
+        System.out.println("Last:  " + list.getLast());   
+
+        list.removeFirst();  
+        list.removeLast();   
+        System.out.println("After removes: " + list);   // 5
+
+        Object[] arr = list.toArray();                  // <-- USE Object[] HERE
+        System.out.println("toArray(): " 
+        + java.util.Arrays.toString(arr));  
+    }
 }
