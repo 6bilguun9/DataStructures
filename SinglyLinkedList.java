@@ -212,6 +212,22 @@ public class SinglyLinkedList<T> implements Iterable<T>{
         tail = null;
         size = 0;
     }
+    public void reverse(){
+        if(head == null || head.next == null){
+            throw new NoSuchElementException("empty");
+        }
+        Node<T> current = head;
+        Node<T> pointer = head.next;
+        Node<T> temp;
+
+        while(pointer != null){
+            temp = pointer.next;
+            pointer.next = current;
+            current = pointer;
+            pointer = temp;
+        }
+        head.next = null;
+    }
     @Override
     public String toString(){
         StringBuilder sb = new StringBuilder();
@@ -236,6 +252,7 @@ public class SinglyLinkedList<T> implements Iterable<T>{
         return array;
         
     }
+
     public static void main(String[] args) {
         SinglyLinkedList<Integer> list = new SinglyLinkedList<>();
 
