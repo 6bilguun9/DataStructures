@@ -1,9 +1,15 @@
-public class Stack<T> {
+import java.util.Iterator;
+
+
+public class Stack<T> implements Iterable<T>{
     private SinglyLinkedList<T> list;
     public Stack(){
         list = new SinglyLinkedList<>();
     }
-
+    @Override
+    public Iterator<T> iterator() {
+        return list.iterator();
+    }
     public void push(T data){
         list.addFirst(data);
     }
@@ -24,7 +30,16 @@ public class Stack<T> {
     }
     @Override
     public String toString() {
-        return "Top -> " + list.toString();
+        StringBuilder sb = new StringBuilder();
+        sb.append("\n");
+        Iterator<T> t = list.iterator();   
+        while(t.hasNext()){
+            sb.append(t.next());
+            if(t.hasNext()){
+                sb.append("\n");
+            }
+        }
+        return sb.toString();
     }
     public T[] toArray(){
         return list.toArray();

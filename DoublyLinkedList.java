@@ -235,6 +235,17 @@ public class DoublyLinkedList<T> implements Iterable<T>{
         tail = null;
         size = 0;
     }
+    @SuppressWarnings("unchecked")
+    public T[] toArray(){
+        Node<T> current = head;
+        T[] array = (T[]) new Object [size];
+        for(int i = 0; i < size; i++){
+            array[i] = current.data;
+            current = current.next;
+        }
+        return array;
+        
+    }
     @Override
     public String toString(){
         StringBuilder sb = new StringBuilder();
